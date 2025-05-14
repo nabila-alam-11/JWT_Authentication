@@ -5,6 +5,8 @@ const app = express();
 
 const SECRET_KEY = "supersecretadmin";
 const JWT_SECRET = "your_jwt_secret";
+
+app.use(cors());
 app.use(express.json());
 
 // MIDDLEWARE
