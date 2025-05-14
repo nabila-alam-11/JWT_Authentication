@@ -12,8 +12,6 @@ const App = () => {
     });
     try {
       const data = await response.json();
-      console.log(data);
-      console.log(secret);
       localStorage.setItem("adminToken", data.token);
     } catch (error) {
       console.log(error.mesage);
@@ -22,7 +20,7 @@ const App = () => {
   return (
     <div>
       <input
-        // type="password"
+        type="password"
         value={secret}
         onChange={(e) => setSecret(e.target.value)}
         placeholder="Enter secret"
