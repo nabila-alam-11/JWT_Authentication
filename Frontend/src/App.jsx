@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  const [secret, setSecret] = useState("");
+  const handleLogic = async () => {
+    const response = await fetch("http://localhost:5002/admin/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ secret }),
+    });
+    try {
+      const data = await response.json();
+      console.log(data);
+      console.log(secret);
+      localStorage.setItem("adminToken", data.token);
+    } catch (error) {
+      console.log(error.mesage);
+    }
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <div>
+      <input
+        // type="password"
+        value={secret}
+        onChange={(e) => setSecret(e.target.value)}
+        placeholder="Enter secret"
+      />
+      <button onClick={handleLogic}>Login</button>
+    </div>
+  );
+};
+export default App;
